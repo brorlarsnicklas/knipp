@@ -1,9 +1,13 @@
 name: Release
 
+permissions:
+  contents: write
+  packages: write
+
 on:
   push:
     branches:
-      - main # eller den branch du vill använda för releaser
+      - main
 
 jobs:
   release:
@@ -16,7 +20,7 @@ jobs:
       - name: Set up Node.js
         uses: actions/setup-node@v2
         with:
-          node-version: "22"
+          node-version: "16" # Node.js v22 is not available yet. Use a stable version like v16 or v14
 
       - name: Install dependencies
         run: |
@@ -26,4 +30,4 @@ jobs:
         run: |
           npx semantic-release
         env:
-          GH_TOKEN: ${{ secrets.MY_GITHUB_TOKEN }}
+          GH_TOKEN: ${{ secrets.MY_GITHUB_TOKEN }} # Ensure the secret 'MY_GITHUB_TOKEN' is added in your repository secrets
