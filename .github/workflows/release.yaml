@@ -1,0 +1,27 @@
+name: Release
+
+on:
+  push:
+    branches:
+      - main # eller den branch du vill använda för releaser
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: "22"
+
+      - name: Install dependencies
+        run: |
+          npm ci
+
+      - name: Run semantic-release
+        run: |
+          npx semantic-release
