@@ -20,7 +20,7 @@ jobs:
       - name: Set up Node.js
         uses: actions/setup-node@v2
         with:
-          node-version: "16" # Node.js v22 is not available yet. Use a stable version like v16 or v14
+          node-version: "22" # Node.js v22 is not available yet. Use a stable version like v16 or v14
 
       - name: Install dependencies
         run: |
