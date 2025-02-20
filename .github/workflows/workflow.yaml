@@ -17,3 +17,8 @@ permissions:
 jobs:
   commit:
     uses: ./.github/workflows/commit.yaml
+  lint:
+    permissions:
+      contents: read
+      security-events: write
+    uses: ./.github/workflows/lint.yaml
