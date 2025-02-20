@@ -16,4 +16,4 @@ permissions:
 
 jobs:
   commit:
-    uses: ./.github/workflows/commit.yml
+    uses: ./.github/workflows/commit.yaml
