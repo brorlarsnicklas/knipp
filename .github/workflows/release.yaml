@@ -15,24 +15,27 @@ jobs:
           git config --global user.name "github-actions[bot]"
           git config --global user.email "github-actions[bot]@users.noreply.github.com"
 
-      - name: Install dependencies
-        run: npm install
-
-      - name: Run standard-version
-        run: npm run release
-
       - name: Fetch all branches
         run: git fetch --all
 
       - name: Checkout the PR source branch
         run: git checkout ${{ github.head_ref }}
 
+      - name: Install dependencies
+        run: npm install
+
+      - name: Run standard-version
+        run: npm run release
+
       - name: Commit version bump and changelog
         run: |
           git add .
           git status  # Check if there are any changes to commit
           git commit -m "chore(release): ${GITHUB_SHA}" || echo "No changes to commit"
-          git push origin ${{ github.head_ref }}
+
+      - name: Push changes to PR branch
+        run: |
+          git push https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }} HEAD:${{ github.head_ref }}
 
       # Optional: Create Git tag
       - name: Create Git tag
