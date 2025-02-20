@@ -1,9 +1,6 @@
 name: Release
 
-on:
-  push:
-    branches:
-      - main # Trigger on push to the main branch
+on: [workflow_call] # yamllint disable-line rule:truthy
 
 jobs:
   release:
@@ -11,7 +8,7 @@ jobs:
 
     steps:
       - name: Checkout code
-        uses: actions/checkout@v2
+        uses: actions/checkout@v4
 
       - name: Set up Git user for commit
         run: |
@@ -24,13 +21,17 @@ jobs:
       - name: Run standard-version
         run: npm run release
 
+      - name: Checkout the PR source branch
+        run: git checkout ${{ github.head_ref }}
+
       - name: Commit version bump and changelog
         run: |
           git add .
-          git commit -m "chore(release): ${GITHUB_SHA}"
-          git push origin main
+          git status  # Check if there are any changes to commit
+          git commit -m "chore(release): ${GITHUB_SHA}" || echo "No changes to commit"
+          git push origin ${{ github.head_ref }}
 
-      # Optional: Create a Git tag
+      # Optional: Create Git tag
       - name: Create Git tag
         run: |
           VERSION=$(node -p "require('./package.json').version")
