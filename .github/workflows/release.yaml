@@ -1,41 +1,36 @@
 name: Release
 
-on: [workflow_call] # yamllint disable-line rule:truthy
+on:
+  push:
+    branches:
+      - main # Trigger on push to the main branch
 
 jobs:
   release:
     runs-on: ubuntu-latest
 
     steps:
-      # Checkout code
       - name: Checkout code
-        uses: actions/checkout@v4
+        uses: actions/checkout@v2
 
-      # Set up Node.js
-      - name: Set up Node.js
-        uses: actions/setup-node@v2
-        with:
-          node-version: '21'
-
-      # Install dependencies
-      - name: Install dependencies
-        run: |
-          npm install
-
-      # Run standard-version
-      - name: Generate new version and changelog
-        run: npm run release 
-
-      # Commit version and changelog changes
-      - name: Commit version bump and changelog
+      - name: Set up Git user for commit
         run: |
           git config --global user.name "github-actions[bot]"
           git config --global user.email "github-actions[bot]@users.noreply.github.com"
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Run standard-version
+        run: npm run release
+
+      - name: Commit version bump and changelog
+        run: |
           git add .
           git commit -m "chore(release): ${GITHUB_SHA}"
           git push origin main
 
-      # Create a Git tag
+      # Optional: Create a Git tag
       - name: Create Git tag
         run: |
           VERSION=$(node -p "require('./package.json').version")
