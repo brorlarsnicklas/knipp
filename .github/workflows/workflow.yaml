@@ -22,3 +22,5 @@ jobs:
       contents: read
       security-events: write
     uses: ./.github/workflows/lint.yaml
+  release:
+    uses: ./.github/workflows/release.yaml
