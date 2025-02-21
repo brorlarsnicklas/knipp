@@ -2,7 +2,8 @@
   "name": "Knipp",
   "version": "1.0.3",
   "scripts": {
-    "release": "standard-version --skip.commit"
+    "release": "standard-version --skip.commit",
+    "test": "echo hello"
   },
   "devDependencies": {
     "standard-version": "^9.5.0"
