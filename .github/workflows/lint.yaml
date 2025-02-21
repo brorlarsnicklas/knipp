@@ -6,7 +6,7 @@ permissions:
   contents: read
 
 env:
-  MEGALINTER_CONFIG: /github/workspace/build-tools/mega-linter.yml
+  MEGALINTER_CONFIG: /github/workspace/build-tools/mega-linter.yaml
 
 jobs:
   megalinter:
