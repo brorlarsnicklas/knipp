@@ -1,5 +1,7 @@
 = Contributing
 
+Test commit
+
 Welcome! We are excited that you are interested in contributing to our project!
 However, there are some things you might need to know, so please browse the following:
 
